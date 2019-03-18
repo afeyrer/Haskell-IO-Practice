@@ -38,16 +38,34 @@
     yes
     I KNEW IT! Thank you.
 -}
-
-guessIt :: Int -> IO ()
-guessIt 11 = putStrLn "Wait.. I have already guessed everything! Cheater."
-guessIt s = do
-    putStrLn $ "Is your number " ++ show s ++ "? (answer \"yes\" or \"no\") "
-    guess <- getLine
-    if guess == "yes"
-        then putStrLn "I KNEW IT! Thank you."
-        else guessIt (s+1)
+average :: (Integral a) => a -> a -> a
+average a b = div (a+b) 2
+--guessIt :: (Num a) a -> a -> a -> IO ()
+guessIt s u l = do
+    if (u-l) > 2 then do
+        putStrLn $ "Is your number greater than " ++ show s ++ "? (answer \"yes\" or \"no\") "
+        guess <- getLine
+        if guess == "yes"
+            then do guessIt (average s u) u s
+            else do guessIt (average l s) s l
+        else do
+            putStrLn $ "Is your number " ++ show s ++ "? (answer \"yes\" or \"no\") "
+            guess <- getLine
+            if guess == "yes"
+                then do putStrLn "I KNEW IT! Thank you."
+                else do 
+                    putStrLn $ "Is your number " ++ show u ++ "? (answer \"yes\" or \"no\") "
+                    guss <- getLine
+                    if guss == "yes"
+                        then do putStrLn "I KNEW IT! Thank you."
+                        else do 
+                            putStrLn $ "Is your number " ++ show l ++ "? (answer \"yes\" or \"no\") " 
+                            gss <- getLine
+                            if gss == "yes"
+                                then do putStrLn "I KNEW IT! Thank you."
+                                else do putStrLn "Wait... I have already guessed everything!"
+                    
 
 main = do
-    putStrLn "Think of a number between 1 and 10 and I will guess it."
-    guessIt 1
+    putStrLn "Think of a number between 1 and 1000 and I will guess it."
+    guessIt 500 1000 0

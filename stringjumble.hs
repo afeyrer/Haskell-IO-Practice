@@ -24,5 +24,16 @@
     reverse, words, unwords
     
 -}
+reverseall :: String -> String
+reverseall line = reverse line
+reversewords :: String -> String
+reversewords = unwords . reverse . words  
+reverseletters :: String -> String
+reverseletters = unwords . map reverse . words  
 
-main = putStrLn "Put your program here!"
+main = do
+    putStrLn "Please enter a string of text (the bigger the better): "
+    line <- getLine
+    putStrLn $reverseall line
+    putStrLn $reversewords line
+    putStrLn $reverseletters line
